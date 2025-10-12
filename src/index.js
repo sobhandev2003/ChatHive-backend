@@ -35,7 +35,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 // ----- setup Express -----
 const app = express();
 app.use(cors({
-  origin: ["http://localhost:5173","https://chathive1.netlify.app"], // frontend dev server (e.g. Vite/React)
+  origin: ["http://localhost:5173","https://chathive1.netlify.app","https://chat-hive-psi.vercel.app"], // frontend dev server (e.g. Vite/React)
   credentials: true,
 }));    
 app.set('trust proxy', 1); // needed on Render for correct secure cookies                           // enable CORS
