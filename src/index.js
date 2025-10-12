@@ -362,5 +362,11 @@ wss.on('connection', async (ws, req) => {
 
 // start the HTTP + WS server
 server.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
+  const address = server.address();
+
+  // address can be { address: '::', family: 'IPv6', port: 3000 }
+  const ip = address.address === '::' ? 'localhost' : address.address;
+  const port = address.port;
+
+  console.log(`🚀 Server running at http://${ip}:${port}`);
 });

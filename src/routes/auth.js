@@ -137,7 +137,10 @@ router.get('/connect', auth, async (req, res) => {
 
     const token = req.cookies?.token || req.headers['authorization']?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'Missing Authorization token' });
-    const wsBase = `ws://localhost:3000`; // Adjust based on your server config
+    const address = req.socket.address();
+    const ip = address.address === '::' ? 'localhost' : address.address;
+    const port = address.port;
+    const wsBase = `ws://${ip}:${port}`; // Use actual IP and port
     const wsUrl = `${wsBase}/?token=${token}`;
     res.json({ wsUrl });
   } catch (error) {
