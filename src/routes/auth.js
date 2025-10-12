@@ -142,7 +142,7 @@ router.get('/connect', auth, async (req, res) => {
     const address = req.socket.address();
     const ip = address.address === '::' ? 'localhost' : address.address;
     const port = address.port;
-    const wsBase = `ws://${process.env.RENDER_EXTERNAL_HOSTNAME}`; // Use actual IP and port
+    const wsBase = `wss://${process.env.RENDER_EXTERNAL_HOSTNAME}`; // Use actual IP and port
     const wsUrl = `${wsBase}/?token=${token}`;
     res.json({ wsUrl });
   } catch (error) {
