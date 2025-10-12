@@ -37,7 +37,8 @@ const app = express();
 app.use(cors({
   origin: "http://localhost:5173", // frontend dev server (e.g. Vite/React)
   credentials: true,
-}));                               // enable CORS
+}));    
+app.set('trust proxy', 1); // needed on Render for correct secure cookies                           // enable CORS
 app.use(cookieParser());                        // parse cookies
 app.use(helmet());                               // basic security headers
 app.use(express.json());                         // parse JSON bodies
@@ -119,22 +120,7 @@ function broadcastOnlineUsers() {
   }
 }
 
-// Wrap add/remove to trigger broadcast
-// function addSocketForUser(userId, ws) {
-//   const id = String(userId);
-//   if (!userSockets.has(id)) userSockets.set(id, new Set());
-//   userSockets.get(id).add(ws);
-//   broadcastOnlineUsers();
-// }
 
-// function removeSocketForUser(userId, ws) {
-//   const id = String(userId);
-//   const set = userSockets.get(id);
-//   if (!set) return;
-//   set.delete(ws);
-//   if (set.size === 0) userSockets.delete(id);
-//   broadcastOnlineUsers();
-// }
 
 
 // helper: parse token from query string like ws://host:3000/?token=...
