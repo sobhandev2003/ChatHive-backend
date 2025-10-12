@@ -136,6 +136,8 @@ router.get('/connect', auth, async (req, res) => {
   try {
 
     const token = req.cookies?.token || req.headers['authorization']?.split(' ')[1];
+    console.log("/connect",req.cookies);
+    
     if (!token) return res.status(401).json({ error: 'Missing Authorization token' });
     const address = req.socket.address();
     const ip = address.address === '::' ? 'localhost' : address.address;
