@@ -30,9 +30,9 @@ router.post('/signup', async (req, res) => {
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
     // respond with token and basic user info (do not send passwordHash) 
     res.cookie('token', token, {
-      httpOnly: true,
+      // httpOnly: true,
       secure: true,        // localhost → false
-      sameSite: "lax",      // not 'none'
+      sameSite: "none",      // not 'none'
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
       .json({ token, user: { id: user._id, name: user.name, email: user.email } });
@@ -56,9 +56,9 @@ router.post('/login', async (req, res) => {
     // create JWT and return 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
     res.cookie('token', token, {
-      httpOnly: true,
+      // httpOnly: true,
       secure: true,        // localhost → false
-      sameSite: "lax",      // not 'none'
+      sameSite:"none",      // not 'none'
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
       .json({ token, user: { id: user._id, name: user.name, email: user.email } });
