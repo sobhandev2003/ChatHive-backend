@@ -70,8 +70,11 @@ router.post('/login', async (req, res) => {
 });
 
 // GET /auth/logout
-router.get('/logout', (req, res) => {
-  res.clearCookie('token').json({ message: 'Logged out' });
+router.get('/logout',auth, (req, res) => {
+  res.clearCookie('token', {
+    sameSite: 'none',
+    secure: true
+  }).json({ message: 'Logged out' });
 });
 
 //Get current loged in user info
