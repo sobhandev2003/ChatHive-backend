@@ -26,6 +26,9 @@ router.get('/recent-contacts', auth, async (req, res) => {
         }
         let contacts = [];
         for (const id of userConnecttion) {
+            if (id === userId) {
+              continue;  
+            }
             const message = await Message.findOne({
                 $or: [
                     { from: userId, to: id },

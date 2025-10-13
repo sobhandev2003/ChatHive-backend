@@ -127,6 +127,8 @@ router.get('/search', auth, async (req, res) => {
         .limit(10); // still limit results to 10
     }
 
+    users.filter(u => u._id.toString() !== req.user.userId);
+
     res.json({ users });
   } catch (error) {
     console.error("User search error:", error);
