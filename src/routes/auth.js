@@ -35,7 +35,7 @@ router.post('/signup', async (req, res) => {
       sameSite: "none",      // not 'none'
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-      .json({ token, user: { id: user._id, name: user.name, email: user.email } });
+      .json({ user: { id: user._id, name: user.name, email: user.email } });
 
   } catch (err) {
     console.error('Signup error:', err); res.status(500).json({ error: 'Server error' });
@@ -58,10 +58,10 @@ router.post('/login', async (req, res) => {
     res.cookie('token', token, {
       // httpOnly: true,
       secure: true,        // localhost → false
-      sameSite:"none",      // not 'none'
+      sameSite: "none",      // not 'none'
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-      .json({ token, user: { id: user._id, name: user.name, email: user.email } });
+      .json({ user: { id: user._id, name: user.name, email: user.email } });
 
   } catch (err) {
     console.error('Login error:', err);
@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
 });
 
 // GET /auth/logout
-router.get('/logout',auth, (req, res) => {
+router.get('/logout', auth, (req, res) => {
   res.clearCookie('token', {
     sameSite: 'none',
     secure: true
@@ -114,7 +114,7 @@ router.get('/search', auth, async (req, res) => {
 
       users = await User.find({
         $and: [
-          { _id: { $ne: req.user.userId } }, // exclude self
+          { _id: { $ne:( req.user._id || req.user.id ) } }, // exclude self
           {
             $or: [
               { name: { $regex: regex } },
@@ -127,7 +127,7 @@ router.get('/search', auth, async (req, res) => {
         .limit(10); // still limit results to 10
     }
 
-    users.filter(u => u._id.toString() !== req.user.userId);
+    // users.filter(u => u._id.toString() !== req.user.userId);
 
     res.json({ users });
   } catch (error) {
@@ -141,8 +141,8 @@ router.get('/connect', auth, async (req, res) => {
   try {
 
     const token = req.cookies?.token || req.headers['authorization']?.split(' ')[1];
-    console.log("/connect",req.cookies);
-    
+    // console.log("/connect",req.cookies);
+
     if (!token) return res.status(401).json({ error: 'Missing Authorization token' });
     const address = req.socket.address();
     const ip = address.address === '::' ? 'localhost' : address.address;

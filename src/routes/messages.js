@@ -26,9 +26,11 @@ router.get('/recent-contacts', auth, async (req, res) => {
         }
         let contacts = [];
         for (const id of userConnecttion) {
-            if (id === userId) {
-              continue;  
-            }
+            // if (id.toString() === userId.toString()) {
+            //     console.log("Same user");
+                
+            //   continue;  
+            // }
             const message = await Message.findOne({
                 $or: [
                     { from: userId, to: id },
@@ -44,6 +46,8 @@ router.get('/recent-contacts', auth, async (req, res) => {
                 contacts.push(message);
             }
         }
+        // console.log(contacts);
+        
         contacts = contacts.sort((a, b) => b.createdAt - a.createdAt);
         // console.log(contacts);
 
