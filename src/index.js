@@ -320,7 +320,7 @@ wss.on('connection', async (ws, req) => {
     // when socket closes, remove it from userSockets mapping
     if (ws.userId) {
       removeSocketForUser(ws.userId, ws);
-      console.log("Removed user");
+      // console.log("Removed user");
 
       if (!userSockets.has(String(ws.userId))) {
         // sendToAllExcept(ws.userId, {
@@ -334,7 +334,7 @@ wss.on('connection', async (ws, req) => {
         } catch (e) {
 
         }
-        console.log('WS disconnected for user', ws.userId);
+        // console.log('WS disconnected for user', ws.userId);
       }
     } else {
       console.log('Unauthenticated socket closed');

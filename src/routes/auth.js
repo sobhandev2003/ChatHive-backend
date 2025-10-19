@@ -123,7 +123,7 @@ router.get('/search', auth, async (req, res) => {
           }
         ]
       })
-        .select("name email")
+        .select("name email avatarUrl")
         .limit(10); // still limit results to 10
     }
 

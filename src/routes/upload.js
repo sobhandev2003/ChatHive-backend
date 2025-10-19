@@ -30,11 +30,15 @@ const parser = multer({ storage });
 
 // POST /upload - field name is "file"
 // protected by auth middleware
-router.post('/', auth, parser.single('file'), (req, res) => {
+router.post('/', auth, parser.single('avatar'), async(req, res) => {
   try {
     // multer + Cloudinary storage attaches file info to req.file
     // CloudinaryStorage typically sets req.file.path to the uploaded file URL
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    // console.log(req);
+    req.user.avatarUrl = req.file.path || req.file.url || req.file.secure_url;
+    await req.user.save();
+    
     // send back URL to client
     res.json({ url: req.file.path || req.file.url || req.file.secure_url });
   } catch (err) {

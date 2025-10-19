@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, unique: true, sparse: true, required: true }, // email (unique if provided)
     phone: { type: String, unique: true, sparse: true }, // phone (optional) 
     passwordHash: { type: String }, // hashed password (bcrypt) 
-    avatarUrl: { type: String }, // optional avatar image URL 
+    avatarUrl: { type: String , default:null}, // optional avatar image URL 
     lastSeen: { type: Date }, // last online timestamp 
     savedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // references to saved users
     userConnecttion: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}], // references to saved users

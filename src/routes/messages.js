@@ -39,8 +39,8 @@ router.get('/recent-contacts', auth, async (req, res) => {
             })
                 .sort({ createdAt: -1 })
                 .populate([
-                    { path: 'from', select: 'name _id avater' },
-                    { path: 'to', select: 'name _id avater' }
+                    { path: 'from', select: '_id name email avatarUrl lastSeen' },
+                    { path: 'to', select: '_id name email avatarUrl lastSeen' }
                 ]);
             if (message) {
                 contacts.push(message);
